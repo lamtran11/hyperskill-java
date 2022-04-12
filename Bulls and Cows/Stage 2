@@ -1,0 +1,48 @@
+package JavaProject;
+
+import java.util.Scanner;
+
+public class Stage2 {
+    public static void main(String[] args) {
+        int answer = 3241;
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine();
+        processingInput(input,answer);
+
+    }
+    public static void processingInput(String input, int answer){
+        int bull = 0;
+        int cow = 0;
+      String inputString = input;
+      String answerString = Integer.toString(answer);
+        for (int i = 0; i < inputString.length(); i++){
+
+            char currentNumber = inputString.charAt(i);
+            if (answerString.contains(Character.toString(currentNumber))){
+                if (answerString.charAt(i) == currentNumber){
+
+                    bull++;
+                } else {
+                    cow++;
+                }
+            }
+        }
+
+        if(bull == 0 && cow == 0){
+            System.out.println("Grade: None. The secret code is 3241.");
+        }
+        else if (bull == 0) {
+            System.out.println("Grade: " + cow + " cow(s). The secret code is 3241");
+        }
+        else if (cow == 0){
+            System.out.println("Grade: " + bull + " bull(s). The secret code is 3241");
+        }
+        else {
+            System.out.println(String.format("Grade: %d bull(s) and %d cow(s). The secret code is 3241.", bull, cow));
+        }
+        {
+
+        }
+
+    }
+}
