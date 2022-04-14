@@ -1,0 +1,100 @@
+package bullscows;
+
+import java.util.Objects;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Please, enter the secret code's length:");
+        int length = Integer.parseInt(scanner.nextLine());
+
+        while (length >= 11) {
+            System.out.println("Error");
+            length = Integer.parseInt(scanner.nextLine());
+        }
+        String secretCode = random(length);
+        System.out.println("Okay, let's start a game!");
+        int turn = 1;
+        boolean stop = false;
+
+        while (!stop) {
+            System.out.println(String.format("Turn %d: ", turn));
+            String inputUser = scanner.nextLine();
+
+            processingInput(inputUser, secretCode);
+            turn++;
+
+            if (Objects.equals(inputUser, secretCode)) {
+                stop = true;
+
+                System.out.println("Congratulations! You guessed the secret code.");
+            }
+        }
+
+    }
+    private static String random (int length) {
+        StringBuilder code = new StringBuilder();
+
+        while (code.length() < length) {
+            int randomNumber = (int) (Math.random()*10);
+            if (!code.toString().contains(Integer.toString(randomNumber))) {
+                code.append(randomNumber);
+            }
+        }
+        return code.toString();
+    }
+
+    public static void processingInput (String input, String answer) {
+        int bull = 0;
+        int cow = 0;
+        String inputString = input;
+        String answerString = answer;
+
+        for (int i = 0; i < inputString.length(); i++) {
+            char currentNumber = inputString.charAt(i);
+
+            if (answerString.contains(Character.toString(currentNumber))) {
+               if (answerString.charAt(i) == currentNumber) {
+                   bull++;
+               }
+               else {
+                   cow++;
+               }
+            }
+        }
+        if(bull == 0 && cow == 0){
+            System.out.println("Grade: None");
+        }
+        else if (bull == 0) {
+            String ending = " cow";
+            if (cow > 1) {
+                ending = ending + "s";
+            }
+            System.out.println("Grade: " + cow + ending);
+        }
+        else if (cow == 0){
+            String ending = " bull";
+            if (bull > 1) {
+                ending = ending + "s";
+            }
+            System.out.println("Grade: " + bull + ending);
+        }
+        else {
+            String endingBull = "bull";
+            if (bull > 1) {
+                endingBull = endingBull + "s";
+            }
+            String endingCow = "cow";
+            if (cow > 1) {
+                endingCow = endingCow + "s";
+            }
+
+            System.out.println(String.format("Grade: %d %s and %d %s.", bull, endingBull, cow, endingCow));
+        }
+
+        {
+
+        }
+    }
+}
